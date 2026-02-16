@@ -1,0 +1,110 @@
+{
+  "info": {
+    "_postman_id": "3f22edfd-5417-4c6a-ad95-c516dab7f806",
+    "name": "Phase 1 -Backend Engine",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52400820",
+    "_collection_link": "https://go.postman.co/collection/52400820-3f22edfd-5417-4c6a-ad95-c516dab7f806?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        },
+        "description": "This endpoint creates a new user account and securely hashes the password using bcrypt before storing it in the database."
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();",
+              "if (response.token) {",
+              "    pm.collectionVariables.set(\"jwt_token\", response.token);",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "description": "This endpoint authenticates a user with their email and password, returning a JWT token that will be automatically saved for subsequent requests."
+      },
+      "response": []
+    },
+    {
+      "name": "All Projects",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "This endpoint retrieves all projects from the database. Requires authentication via JWT token."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Project",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzcxMjczNTQwLCJleHAiOjE3NzEyNzcxNDB9.QO3sdc4rMTVstGg_OsKchf-pNMvgFTXkBDnsv3mgLQc",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \r\n    \"name\": \"Phase 1\", \r\n    \"description\": \"Backend engine complete\" \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "This endpoint creates a new project in the database. Requires authentication via JWT token."
+      },
+      "response": []
+    },
+    {
+      "name": "Single Project",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "description": "This endpoint retrieves a single project by its ID. Requires authentication via JWT token."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "jwt_token",
+      "value": ""
+    }
+  ]
+}
